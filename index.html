@@ -1,56 +1,102 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	  html { height: 100% }
+	  body { height: 100%; margin: 0px; padding: 0px }
+	  #map_canvas { height: 100% }
+	</style>
+	<script type="text/javascript"
+	    src="http://maps.google.com/maps/api/js?sensor=false">
+	</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    
     <script type="text/javascript" charset="utf-8">
-      function search() {
-        $.get("http://search.twitter.com/search.json?q=%23odhd", function(data) {
-          messages = data.results;
-          // console.log(data.results)
-          for (var i = messages.length - 1; i >= 0; i--){
-            message = messages[i].text;
-            // console.log(message);
-            
-            if(message) {
-              airportCode = message.match(/\#(\w\w\w)\b/)
+		var hackfests = {"YOW":{"city":"Ottawa",  "lat":45.32265,"lng":-75.66739,"marker":null},
+						 "YEG":{"city":"Edmonton","lat":53.30858,"lng":-113.58014,"marker":null}
+						}
+		var map = null;
+		var unhighlightedMarker = null;
+		var highlightedMarker = "http://pushmatrix.com/sasqwatchottawa/images/sasquatch.png"
+ 		function initialize() 
+		{
+    		var latlng = new google.maps.LatLng(-34.397, 150.644);
+    		var myOptions = {
+      			zoom: 1,
+      			center: latlng,
+      			mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false,
+				navigationControl: true,
+			    navigationControlOptions: {
+			        style: google.maps.NavigationControlStyle.SMALL,
+			        position: google.maps.ControlPosition.TOP_LEFT
+			    }
+    		};
+    		map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
 
-              if(airportCode) {
-                airportCode = airportCode[1];
-                console.log("found an airport code! " + airportCode);
+			// Draw the hackfests on the map
+			// The markers are stored in each object defined in the hackfest hash.
+			for(var key in hackfests){
+				var latlng = new google.maps.LatLng(hackfests[key]["lat"], hackfests[key]["lng"]);
+				hackfests[key]["marker"] = new google.maps.Marker({position: latlng,title:"Hello World!",icon:unhighlightedMarker});
+				hackfests[key]["marker"].setMap(map);
+			}
+			twitterSearch();
+  		}
+		
+		// This will turn a marker into its highlighted state 
+		function highlightMarker(marker){
+			marker.icon = highlightedMarker;
+			marker.setMap(map);
+		}
+		
+		// This will return the marker to its original state
+		function unhighlightMarker(marker){
+			marker.icon = unhighlightedMarker;
+			marker.setMap(map);
+		}
+	    
+		function twitterSearch() {
 
-                $.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + airportCode + "&sensor=false", function(data) {
-                  console.log(data.results[0].geometry.location);
-                });
-              }
-            }
-            
-            // console.log(messages[i].geo);
-          };
-         });
-      }
+			$.get("http://search.twitter.com/search.json?q=%23odhd", function(data) {
+				messages = data.results;
+				// console.log(data.results)
+				for (var i = messages.length - 1; i >= 0; i--){
+					message = messages[i].text;
+					// console.log(message);
+					if(message) {
+						airportCode = message.match(/\#(\w\w\w)\b/)
+						if(airportCode) {
+							airportCode = airportCode[1];
+							console.log("found an airport code! " + airportCode);
+							if(hackfests[airportCode]){
+								highlightMarker(hackfests[airportCode]["marker"]);
+							}
+							/*
+							$.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + airportCode + "&sensor=false", function(data) {
+							console.log(data.results[0].geometry.location);
+							// To add the marker to the map, call setMap();
+							// marker.setMap(map);
+							});*/
+						}
+					}
+					// console.log(messages[i].geo);
+				};
+			});
+		}
     </script>
     
   </head>
   
-  <body>
-    <p>ohai</p>
-    
-    <a href="" onclick="search()">Search!</a>
-    
-    <script type="text/javascript" charset="utf-8">
-      search()
-    </script>
-    
-    <div id="results"></div>
-    
-    <hr />
-    
+  <body onload="initialize()">
+    <div id="map_canvas" style="width:800px; height:600px"></div>
+    <!-->
     <h1>Idea</h1>
     <p>This tool will feature a map of blinking points, each accompanied with a Twitter message appearing.</p>
     <p>The messages will result from searching Twitter for a series of hashtags.</p>
     <p>The messages will be cached with localStorage['#opendataottawa'] JS calls for faster performance upon restarts.</p>
     <p>The positioning of the points will be from client-side geocoding of location strings associated with the name and hashtag during a registration.</p>
     <p>A captcha and manual approval of the search terms/hashtags will prevent trolling.</p>
+	-->
   </body>
 </html>
