@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+      function search() {
+        $.get("http://search.twitter.com/search.json?q=%23odhd", function(data) {
+          messages = data.results;
+          // console.log(data.results)
+          for (var i = messages.length - 1; i >= 0; i--){
+            message = messages[i].text;
+            // console.log(message);
+            
+            if(message) {
+              airportCode = message.match(/\#(\w\w\w)\b/)
+
+              if(airportCode) {
+                airportCode = airportCode[1];
+                console.log("found an airport code! " + airportCode);
+
+                $.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + airportCode + "&sensor=false", function(data) {
+                  console.log(data.results[0].geometry.location);
+                });
+              }
+            }
+            
+            // console.log(messages[i].geo);
+          };
+         });
+      }
+    </script>
+    
+  </head>
+  
+  <body>
+    <p>ohai</p>
+    
+    <a href="" onclick="search()">Search!</a>
+    
+    <script type="text/javascript" charset="utf-8">
+      search()
+    </script>
+    
+    <div id="results"></div>
+    
+    <hr />
+    
+    <h1>Idea</h1>
+    <p>This tool will feature a map of blinking points, each accompanied with a Twitter message appearing.</p>
+    <p>The messages will result from searching Twitter for a series of hashtags.</p>
+    <p>The messages will be cached with localStorage['#opendataottawa'] JS calls for faster performance upon restarts.</p>
+    <p>The positioning of the points will be from client-side geocoding of location strings associated with the name and hashtag during a registration.</p>
+    <p>A captcha and manual approval of the search terms/hashtags will prevent trolling.</p>
+  </body>
+</html>
