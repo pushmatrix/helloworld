@@ -210,3 +210,10 @@ img
   width:206px;
   height:69px;
 }
+
+#info{
+  padding-left:10px;
+  width: 245px;
+  color: #aaa;
+  word-wrap: break-word;
+}
