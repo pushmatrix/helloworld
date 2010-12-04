@@ -1,0 +1,212 @@
+html, body
+{
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+}
+html
+{
+	background: #000;
+}
+body
+{
+	color: #fff;
+	overflow: hidden;
+}
+#map
+{
+	position: relative;
+	opacity: 1;  
+}
+#map svg
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#map.centered
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	opacity: 1;	
+}
+#map-image
+{
+	max-width: 100%;
+	max-height: 100%;
+	position: relative;
+	top: 200px;
+}
+#map-canvas
+{
+	max-width: 100%;
+	max-height: 100%;
+	position: absolute;
+	top: 200px;
+	left: 0;
+}
+
+a:link {color: #FFF;text-decoration: underline;}
+a:visited {color: #FFF;text-decoration: underline;}	
+a:hover { color:#FFF; text-decoration : none;} 
+a:active{color:#FFF;text-decoration : none; }
+
+.hidden 
+{
+  opacity: 0;
+}
+
+div.marker
+{
+  position: absolute;
+  cursor: default;
+	z-index: 200;
+}
+
+
+div.meta
+{
+	top: 11px;
+	left: 80%;
+	width: 400px;
+	position:absolute;
+  -webkit-transition: opacity 1s linear;  
+  -moz-transition: opacity 1s linear;  
+  -o-transition: opacity 1s linear;  
+  text-shadow: 1px 1px 1px #000;
+  z-index: 40000;
+}
+
+
+div.meta .city{
+  top: 11px;
+	left: 80%;
+  padding-bottom: 5px;
+}
+
+div.meta .username{
+  float:left;
+  color: #DDD;
+  font-style: bold;
+}
+
+div.meta .date{
+  float:right;
+  color: #DDD;
+  font-style: italic;
+  font-size: smaller;
+}
+
+div.meta .tweet{
+  border-radius: 5px;	
+  border: 1px solid #555;
+  width: 400px;
+  background: #252525;
+  padding: 10px;
+	word-wrap: break-word;
+	position: absolute;
+}
+div.meta .pic{
+  float:left;
+  margin-right:10px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #555;
+}
+div.meta .message{
+  font-family: Arial;
+  color: #AAA;
+  float: left;
+  width: 340px;
+}
+
+img
+{
+	width: 100%;
+}
+.standard
+{
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	opacity: 1;
+}
+.origin
+{
+	width: 200px;
+	height: 200px;
+	margin: 0 0 0 0;
+	opacity: 0.1;
+}
+.middle
+{
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	opacity: 0.2;
+}
+.dampened
+{
+	opacity: 0.2 !important;
+}
+
+#messages
+{
+	position: absolute;
+	top: 70px;
+	right: 20px;
+	color: red;
+	background: rgba(0,0,0,0.2);
+	z-index: 200;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+#messages:hover li
+{
+	opacity: 0.9 !important;
+}
+#messages li
+{
+	list-style: none;
+	margin: 0;
+	line-height: 1.5;
+	padding: 2px 0;
+}
+#messages .user
+{
+	color: yellow;
+	padding: 0 5px 0 0;
+}
+
+#last-activity
+{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 19px;
+	color: #888;
+}
+#last-activity span
+{
+	color: yellow;
+}
+
+#channel
+{
+	color:#fff !important;
+}
+
+#message
+{
+	padding: 5px 0 0;
+	font-size: 15px;
+	color: red;
+}
+
+.logo{
+  padding: 10px;
+  width:206px;
+  height:69px;
+}
